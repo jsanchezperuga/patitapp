@@ -25,6 +25,6 @@ const mascotasPerdidas = [
 
 const mascotasEncontradas = [
   {id: "4ea3ec0e-50b0-4ab1-8835-42ac85e4776e", title: "Caniche toy blanco (Devoto)", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStJ9J3loc1RIB62GQ_txwcjPTLN6uyyOMd7g&usqp=CAU"},
-  {id: "e204f10f-c071-42f7-89f3-7af53953ffe5", title: "Tortuga de agua encontrada en Berazategui", image: "https://www.fanmascotas.com/wp-content/uploads/2017/05/tortuga-de-agua-640x480.jpg"},
+  {id: "e204f10f-c071-42f7-89f3-7af53953ffe5", title: "Tortuga de agua encontrada en Berazategui", image: "https://wikifaunia.com/wp-content/uploads/2014/11/tortuga-de-agua-cuidados-nombres-mascotas-foto.jpg"},
   {id: "e8bdc6b2-1ad1-4b6c-bd9a-a69375cab72d", title: "Perra viejita de unos 9 años encontrada", image: "https://res.cloudinary.com/postedin/image/upload/d_mascotas:no-image.jpg,f_auto,q_80/mascotas/c-postedin-image-32482.jpeg"}
 ]
