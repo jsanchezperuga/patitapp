@@ -3,7 +3,7 @@ import { FlatList, View, StatusBar, StyleSheet, Text, TouchableOpacity, Image } 
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Image source={item.image} style={{ width: 25, height: 25 }} />
+    <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
     <Text style={[styles.itemTitle, textColor]}>{item.title.length > 15 ? item.title.slice(0, 15) + "..." : item.title}</Text>
   </TouchableOpacity>
 );
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 700
+    fontWeight: '700'
   }
 });
