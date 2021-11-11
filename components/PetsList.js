@@ -3,8 +3,10 @@ import { FlatList, View, StatusBar, StyleSheet, Text, TouchableOpacity, Image } 
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
-    <Text style={[styles.itemTitle, textColor]}>{item.title.length > 15 ? item.title.slice(0, 15) + "..." : item.title}</Text>
+    <Text style={[styles.itemTitle, textColor]}>
+      <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
+      {item.title.trim().length > 30 ? item.title.trim().slice(0, 30).trim() + "..." : item.title}
+    </Text>
   </TouchableOpacity>
 );
 
@@ -14,7 +16,6 @@ export default function PetsList({ pets, title }) {
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
     const color = item.id === selectedId ? 'white' : 'black';
-    console.log(item);
     return (
       <Item
         item={item}
@@ -32,8 +33,7 @@ export default function PetsList({ pets, title }) {
         data={pets}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
+        extraData={selectedId}/>
     </View>
   );
 };
