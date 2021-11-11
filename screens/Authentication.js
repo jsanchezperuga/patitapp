@@ -1,18 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { StyleSheet, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Platform, Image } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@firebase/auth"
 import { auth } from '../services/Firebase'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "@firebase/auth"
 import { DataContext } from '../contexts/GlobalContext'
 import { validateEmail, validatePassword } from '../utils/validations'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 
 export default function Authentication({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { user, setUser } = useContext(DataContext)
-
-  const loginWithGoogle = () => {
-
-  }
+  const { setUser } = useContext(DataContext)
 
   const traditionalLogin = () => {
     // un login tiene menos validaciones que un registro
@@ -62,8 +59,6 @@ export default function Authentication({ navigation }) {
     }
   }
 
-
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -101,12 +96,7 @@ export default function Authentication({ navigation }) {
           <Text style={styles.buttonOutlineText}>Registrarse</Text>
         </TouchableOpacity>
         <Text>O tambien puede</Text>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={loginWithGoogle}
-          style={[styles.button, { padding: 0, borderRadius: 0 }]}>
-          <Image source={require("../assets/loginWithGoogle.png")} style={styles.googleButton} />
-        </TouchableOpacity>
+        <GoogleLoginButton navigation={navigation} />
       </View>
     </KeyboardAvoidingView>
   )
