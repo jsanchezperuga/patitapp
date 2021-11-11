@@ -14,7 +14,6 @@ export default function Settings({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Hola soy el SettingsScreen</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}

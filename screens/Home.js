@@ -4,11 +4,10 @@ import PetsList from '../components/PetsList'
 
 export default function Home() {
   return (
-    <View style={{flex: 1}}> 
+    <View> 
       {/* Implementar mapa/integracion con google maps?? */}
       {/* Por mientras, mostrar una lista con los pedidos de busqueda y encontrados */}
 
-      {/* por que si no tiene el style flex en android no funciona?? */}
       <PetsList title="Mascotas Perdidas" pets={mascotasPerdidas}  />
       <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas}  />
     </View>
