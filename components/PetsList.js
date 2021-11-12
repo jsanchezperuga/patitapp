@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
 import { FlatList, View, StatusBar, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={[styles.itemTitle, textColor]}>
-      <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
-      {item.title.trim().length > 30 ? item.title.trim().slice(0, 30).trim() + "..." : item.title}
-    </Text>
-  </TouchableOpacity>
-);
+function Item({ item, onPress, backgroundColor, textColor }) {
+  const openModal = () => {
+    onPress();
+    // abrir modal importando un componente de react-native
+  }
+
+  return (
+    <TouchableOpacity onPress={openModal} style={[styles.item, backgroundColor]}>
+      <Text style={[styles.itemTitle, textColor]}>
+        <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
+        {item.title.trim().length > 30 ? item.title.trim().slice(0, 30).trim() + "..." : item.title}
+      </Text>
+    </TouchableOpacity>
+  )
+};
 
 export default function PetsList({ pets, title }) {
   const [selectedId, setSelectedId] = useState(null);
@@ -33,7 +40,7 @@ export default function PetsList({ pets, title }) {
         data={pets}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        extraData={selectedId}/>
+        extraData={selectedId} />
     </View>
   );
 };
