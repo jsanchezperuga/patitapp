@@ -3,21 +3,19 @@ import React from 'react'
 import { ScrollView, Text, StyleSheet, Image } from 'react-native'
 import WhatsappButton from './WhatsappButton'
 
-export default function PostInfo() {
+export default function PostInfo({ id, title, image, contactName, desc, zone, wpp, setVisible }) {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Lola te está buscando</Text>
+      <Text style={styles.title} onPress={() => setVisible(false)}>X</Text>
+      <Text style={styles.title}>{title}</Text>
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Golden_Retriever_9-year_old.jpg/1200px-Golden_Retriever_9-year_old.jpg' }}
+        source={{ uri: image }}
         style={styles.image}
       />
-      <Text style={styles.row}>Contacto: Ana</Text>
-      <Text style={styles.row}>Zona: Devoto</Text>
-      <Text style={styles.desc}>Golden Retriever perdida, tiene 5 años y tenia un collar verde, se escapo por la placita Libertad el martes 2 de noviembre. Cualquier info contactarse al whatsapp
-      Golden Retriever perdida, tiene 5 años y tenia un collar verde, se escapo por la placita Libertad el martes 2 de noviembre. Cualquier info contactarse al whatsapp
-      Golden Retriever perdida, tiene 5 años y tenia un collar verde, se escapo por la placita Libertad el martes 2 de noviembre. Cualquier info contactarse al whatsapp
-      Golden Retriever perdida, tiene 5 años y tenia un collar verde, se escapo por la placita Libertad el martes 2 de noviembre. Cualquier info contactarse al whatsapp</Text>
-      <WhatsappButton />
+      <Text style={styles.row}>Contacto: {contactName}</Text>
+      <Text style={styles.row}>Zona: {zone}</Text>
+      <Text style={styles.desc}>{desc}</Text>
+      <WhatsappButton number={wpp} />
     </ScrollView>
   )
 }
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: '#ffffff',
     padding: 16,
-   
+
   },
   title: {
     fontSize: 32,

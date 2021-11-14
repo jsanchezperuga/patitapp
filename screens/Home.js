@@ -1,22 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text } from 'react-native'
+import ReactNativeModal from 'react-native-modal'
 import PetsList from '../components/PetsList'
 
 export default function Home() {
+  const [visible, setVisible] = useState(false)
+  const [post, setPost] = useState(null)
+  
   return (
     <View style={{ flex: 1 }}>
       {/* Implementar mapa/integracion con google maps?? */}
       {/* Por mientras, mostrar una lista con los pedidos de busqueda y encontrados */}
-
-      <PetsList title="Mascotas Perdidas" pets={mascotasPerdidas} />
-      <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas} />
+      <ReactNativeModal children={post} isVisible={visible} />
+      <PetsList title="Mascotas Perdidas" pets={mascotasPerdidas} setVisible={setVisible} setPost={setPost} />
+      <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas} setVisible={setVisible} setPost={setPost}/>
     </View>
   )
 }
 
 // ejemplo que se va a obtener desde firebase
 const mascotasPerdidas = [
-  { id: "7082b7af-8a2c-453e-85b0-8e19d4ccfbbf", title: "Perro raza grande perdido!!", image: "https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/kraken_generic_max_width_960/public/purina-7-razas-de-perros-grandes-para-lugares-espaciosos.png?itok=EtrqNqaB" },
+  { id: "7082b7af-8a2c-453e-85b0-8e19d4ccfbbf", title: "Perro raza grande perdido!!", image: "https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/kraken_generic_max_width_960/public/purina-7-razas-de-perros-grandes-para-lugares-espaciosos.png?itok=EtrqNqaB", contactName: "Erik", zone: "Ballester", desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book", wpp: "1149936250" },
   { id: "c098a96a-021d-454e-bae6-95904888bfa8", title: "Chiguaga marron responde a nombre de Lazie", image: "https://i.pinimg.com/236x/86/0a/bf/860abf2c83e17fbca40a8e17af082db8--chihuahua-dogs-pet-dogs.jpg" },
   { id: "b0fcbf9d-378d-492e-8789-110acb05ae6b", title: "Gato blanco cola corta", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaDY32G6pXAxySzaxjaIwW63Crj8ZcsiOCvA&usqp=CAU" },
   { id: "251132a3-0b7a-425a-a429-1a75743211a0", title: "(Zona Devoto) caniche toy blanco", image: "https://image.freepik.com/foto-gratis/pequeno-cachorro-caniche-toy-dorado-jardin_126745-1792.jpg" }

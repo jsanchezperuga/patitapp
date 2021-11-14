@@ -1,9 +1,9 @@
 import React from 'react'
 import { TouchableOpacity, Linking, Text, StyleSheet, Image } from 'react-native'
 
-export default function WhatsappButton() {
+export default function WhatsappButton({wpp}) {
   const openWhatsapp = () => {
-    Linking.openURL('whatsapp://send?phone=+5491155130671')
+    Linking.openURL(`whatsapp://send?phone=+549${wpp}`)
   }
 
   return (

@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { FlatList, View, StatusBar, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import PostInfo from './PostInfo';
 
-function Item({ item, onPress, backgroundColor, textColor }) {
+function Item({ item, onPress, backgroundColor, textColor, setVisible, setPost }) {
   const openModal = () => {
     onPress();
-    // abrir modal importando un componente de react-native
+    setVisible(true);
+    setPost(
+      <PostInfo {...item} setVisible={setVisible} />
+    );
   }
 
   return (
@@ -17,7 +21,7 @@ function Item({ item, onPress, backgroundColor, textColor }) {
   )
 };
 
-export default function PetsList({ pets, title }) {
+export default function PetsList({ pets, title, setVisible, setPost }) {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -29,6 +33,8 @@ export default function PetsList({ pets, title }) {
         onPress={() => setSelectedId(item.id)}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
+        setVisible={setVisible}
+        setPost={setPost}
       />
     );
   };
