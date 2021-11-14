@@ -5,6 +5,7 @@ import { DataContext } from '../contexts/GlobalContext';
 import Home from './Home';
 import Settings from './Settings';
 import NewPost from './NewPost';
+import PostForm from '../components/PostForm';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default function AppNavigator() {
         }} />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={PostForm}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cog" color={color} size={size} />
