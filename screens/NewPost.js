@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ReactNativeModal from 'react-native-modal'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
 
 export default function NewPost() {
+  const [visible, setVisible] = useState(false);
+  const [post, setPost] = useState(null);
+  
   return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>

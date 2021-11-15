@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Image, Text, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
 
 import addPicture from '../assets/add-picture-icon.png';
@@ -12,10 +12,9 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
   const [channel, setChannel] = useState('');
   const [pic, setPic] = useState('');
 
-
-  const saveForm = () => {
-    //validacion?aFirebase:mostrarErrores (toast)
-  }
+  // const saveForm = () => {
+  //   //validacion?aFirebase:mostrarErrores (toast)
+  // }
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.paragraph}>
