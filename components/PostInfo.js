@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import { ScrollView, Text, StyleSheet, Image } from 'react-native'
 import WhatsappButton from './WhatsappButton'
