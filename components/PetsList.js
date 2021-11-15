@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { FlatList, View, StyleSheet, Text, TouchableOpacity, Image,StatusBar } from "react-native";
 import PostInfo from './PostInfo';
 
 function Item({ item, onPress, backgroundColor, textColor, setVisible, setPost }) {
