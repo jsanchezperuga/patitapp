@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Image, Text, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
 
 import addPicture from '../assets/add-picture-icon.png';
