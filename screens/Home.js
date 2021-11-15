@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import ReactNativeModal from 'react-native-modal'
 import PetsList from '../components/PetsList'
 
 export default function Home() {
-  const [visible, setVisible] = useState(false)
-  const [post, setPost] = useState(null)
-  
+  const [visible, setVisible] = useState(false);
+  const [post, setPost] = useState(null);
+
   return (
     <View style={{ flex: 1 }}>
       {/* Implementar mapa/integracion con google maps?? */}
       {/* Por mientras, mostrar una lista con los pedidos de busqueda y encontrados */}
       <ReactNativeModal children={post} isVisible={visible} />
       <PetsList title="Mascotas Perdidas" pets={mascotasPerdidas} setVisible={setVisible} setPost={setPost} />
-      <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas} setVisible={setVisible} setPost={setPost}/>
+      <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas} setVisible={setVisible} setPost={setPost} />
     </View>
   )
 }
