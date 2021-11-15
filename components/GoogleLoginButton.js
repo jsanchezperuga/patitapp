@@ -33,7 +33,7 @@ export default function GoogleLoginButton({ navigation }) {
       style={styles.button}
       onPress={() => promptAsync()}>
       <Text style={styles.buttonText}>
-        {/* <Image source={{ uri: require("../assets/google-logo.png") }} style={styles.googleLogo} /> */}
+        <Image source={require("../assets/google-logo.png")} style={styles.googleLogo} />
         Iniciar sesión con Google
       </Text>
     </TouchableOpacity>
