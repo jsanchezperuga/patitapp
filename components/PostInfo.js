@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet, Image } from 'react-native'
+import { ScrollView, Text, StyleSheet, Image, StatusBar } from 'react-native'
 import WhatsappButton from './WhatsappButton'
 
 export default function PostInfo({ id, title, image, contactName, desc, zone, wpp, setVisible }) {
