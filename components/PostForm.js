@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Image, Text, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
-
 import addPicture from '../assets/add-picture-icon.png';
 
-export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHolder, descripPlaceHolder, channelPlaceHolder }) => {
+export default function PostForm({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHolder,channelPlaceHolder }) {
   //form field's states
   const [title, setTitle] = useState('');
   const [contact, setContact] = useState('');
@@ -12,10 +11,9 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
   const [channel, setChannel] = useState('');
   const [pic, setPic] = useState('');
 
-
-  const saveForm = () => {
-    //validacion?aFirebase:mostrarErrores (toast)
-  }
+  // const saveForm = () => {
+  //   //validacion?aFirebase:mostrarErrores (toast)
+  // }
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.paragraph}>
@@ -35,7 +33,7 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
       </Text>
       <TextInput style={styles.input}
         placeholder={contactPlaceHolder}
-        value = {contact}
+        value={contact}
         onChangeText={text => setContact(text)}
       />
       <Text
@@ -44,7 +42,7 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
       </Text>
       <TextInput style={styles.input}
         placeholder={areaPlaceHolder}
-        value = {area}
+        value={area}
         onChangeText={text => setArea(text)}
       />
       <Text
@@ -54,8 +52,8 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
       <TextInput
         style={styles.inputMultiline}
         multiline={true}
-        placeholder={descripPlaceHolder}
-        value = {descr}
+        placeholder={'Ingresa raza, color, tamaño y cualquier información que ayude a la identificación'}
+        value={descr}
         onChangeText={text => setdescr(text)}
       />
       <Text
@@ -64,7 +62,7 @@ export default ({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHold
       </Text>
       <TextInput style={styles.input}
         placeholder={channelPlaceHolder}
-        value = {channel}
+        value={channel}
         onChangeText={text => setChannel(text)}
       />
       <Text

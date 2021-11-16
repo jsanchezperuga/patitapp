@@ -1,14 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ReactNativeModal from 'react-native-modal'
+import PostForm from '../components/PostForm'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
 export default function NewPost() {
+  const [visible, setVisible] = useState(false);
+  const [form, setForm] = useState(null);
+  
+  const openModal = (type)=>{
+    if(type =='lost'){
+      const data = {formTitle:'Crear aviso de PERDIDO', titlePlaceHolder:'Ej: Se perdió mi perro Pepe', contactPlaceHolder: 'Nombre contacto', areaPlaceHolder:'Barrio en el que se perdió',channelPlaceHolder:'Número de Whatsapp del contacto'}
+      setForm(
+        <PostForm {...data}/>
+      )
+    }
+    setVisible(true)
+  }
+
   return (
     <View style={styles.container}>
+      {form && <ReactNativeModal children={form} isVisible={visible} />}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
           //acá se invoca el modal
-          //onPress={ }
+          onPress={()=> openModal('lost')}           
           style={styles.button}
         >
           <Text style={styles.buttonText}>Crear aviso de perdido</Text>
@@ -17,7 +33,7 @@ export default function NewPost() {
         <TouchableOpacity
           activeOpacity={0.8}
           //acá se invoca el modal
-          //onPress={ }
+          onPress={()=> openModal('found')}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
