@@ -11,7 +11,7 @@ export default function Home() {
     <View style={{ flex: 1 }}>
       {/* Implementar mapa/integracion con google maps?? */}
       {/* Por mientras, mostrar una lista con los pedidos de busqueda y encontrados */}
-      {post && <ReactNativeModal children={post} isVisible={visible} />}
+      {post && <ReactNativeModal onBackButtonPress={() => setVisible(false)} children={post} isVisible={visible} />}
       <PetsList title="Mascotas Perdidas" pets={mascotasPerdidas} setVisible={setVisible} setPost={setPost} />
       <PetsList title="Mascotas Encontradas" pets={mascotasEncontradas} setVisible={setVisible} setPost={setPost} />
     </View>
