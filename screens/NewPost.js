@@ -18,7 +18,7 @@ export default function NewPost() {
 
   return (
     <View style={styles.container}>
-      {form && <ReactNativeModal onBackButtonPress={() => setVisible(false)} children={form} isVisible={visible} />}
+      {form && <ReactNativeModal onBackButtonPress={() => setVisible(false)} children={form} isVisible={visible} style={{margin: 0}} />}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
 import Authentication from './screens/Authentication';
 import AppNavigator from './screens/AppNavigator';
 import DataProvider from './contexts/GlobalContext';
@@ -16,6 +17,7 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="AppNavigator" component={AppNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
+      <Toast />
     </DataProvider>
   )
 }
