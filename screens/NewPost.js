@@ -3,7 +3,6 @@ import ReactNativeModal from 'react-native-modal'
 import PostForm from '../components/PostForm'
 import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import generatePlaceHolders from '../utils/generatePlaceholders';
-import exclamation from '../assets/exclamation.png'
 
 export default function NewPost() {
   const [visible, setVisible] = useState(false);
@@ -40,7 +39,6 @@ export default function NewPost() {
             <Image source={require("../assets/tick.png")} style={styles.foundIcon} />
             <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
           </View>
-
         </TouchableOpacity>
       </View>
     </View>
@@ -112,5 +110,4 @@ const styles = StyleSheet.create({
   },
   foundIcon: {
   }
-
 })

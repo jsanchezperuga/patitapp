@@ -7,20 +7,15 @@ export default function PostInfo({ id, title, image, contactName, desc, zone, wp
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* <Text style={styles.title} onPress={() => setVisible(false)}>X</Text> */}
-      
       <View style={styles.imageContainer}>
       <Text style={styles.title}>{title}</Text>
-        <Image
-          source={{ uri: image }}
-          style={styles.image}
-        />
+        <Image source={{ uri: image }} style={styles.image} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.row}>Contacto: {contactName}</Text>
         <Text style={styles.row}>Zona: {zone}</Text>
         <Text style={styles.desc}>{desc}</Text>
       </View>
-
       <View style={styles.buttonContainer}>
         <WhatsappButton wpp={wpp} style={styles.wapButton}/>
       </View>
