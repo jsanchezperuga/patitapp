@@ -1,18 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableHighlight } from 'react-native';
+import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
+import { createPost } from '../database';
+import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder }) {
+export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection }) {
   const [title, setTitle] = useState("");
-  const [contact, setContact] = useState("");
+  const [contactName, setContactName] = useState("");
   const [area, setArea] = useState("");
-  const [descr, setdescr] = useState("");
-  const [channel, setChannel] = useState("");
+  const [desc, setDesc] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
   const [pic, setPic] = useState(null);
 
-  // const saveForm = () => {
-  //   //validacion?aFirebase:mostrarErrores (toast)
-  // }
+  const saveForm = async () => {
+    let [cNameError, cNameMessageError] = validatePostContactName(contactName);
+    let [cNumberError, cNumberMessageError] = validatePostContactNumber(contactNumber);
+    let [titleError, titleMessageError] = validatePostTitle(title);
+    let [areaError, areaMessageError] = validatePostArea(area)
+    if (cNameError || cNumberError || titleError || areaError) {
+      let messageError = ""
+      // solo se puede mostrar un toast
+      cNumberError ? messageError = `• ${cNumberMessageError}` : ""
+      areaError ? messageError = `• ${areaMessageError}` : ""
+      cNameError ? messageError = `• ${cNameMessageError}` : ""
+      titleError ? messageError = `• ${titleMessageError}` : ""
+
+      Toast.show({ type: "error", text1: "Por favor revise el formulario", text2: messageError, })
+    } else {
+      let id = await createPost(collection, {
+        title,
+        contactName,
+        desc,
+        wpp: contactNumber,
+        zone: area
+      })
+      console.log("ejeje el id es:", id);
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -54,8 +79,8 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder 
       </Text>
       <TextInput style={styles.input}
         placeholder="Nombre del contacto"
-        value={contact}
-        onChangeText={text => setContact(text)} />
+        value={contactName}
+        onChangeText={text => setContactName(text)} />
       <Text
         style={styles.formItemTitle}>
         Zona
@@ -71,8 +96,8 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder 
       <TextInput style={styles.inputMultiline}
         multiline={true}
         placeholder="Ingresa raza, color, tamaño y cualquier información que ayude a la identificación"
-        value={descr}
-        onChangeText={text => setdescr(text)} />
+        value={desc}
+        onChangeText={text => setDesc(text)} />
       <Text
         style={styles.formItemTitle}>
         Whatsapp
@@ -80,8 +105,8 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder 
       <TextInput style={styles.input}
         placeholder="Sin +54 9 y con 11. Ej: 1122334455"
         keyboardType="phone-pad"
-        value={channel}
-        onChangeText={text => setChannel(text)} />
+        value={contactNumber}
+        onChangeText={text => setContactNumber(text)} />
       <Text
         style={styles.formItemTitle}>
         Agregar una foto
@@ -93,7 +118,8 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder 
             : <Image source={require("../assets/add-picture-icon.png")} style={styles.singleImage} />}
         </View>
       </TouchableHighlight>
-      <Button title="Publicar" />
+      <Button title="Publicar" onPress={saveForm} />
+      <Toast />
     </ScrollView>
   )
 }
