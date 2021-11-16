@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
-import { Image, Text, View, StyleSheet, TextInput, Button, ScrollView } from 'react-native';
-import addPicture from '../assets/add-picture-icon.png';
+import React, { useState, useEffect } from 'react';
+import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableHighlight } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
-export default function PostForm({ formTitle, titlePlaceHolder, contactPlaceHolder, areaPlaceHolder,channelPlaceHolder }) {
-  //form field's states
-  const [title, setTitle] = useState('');
-  const [contact, setContact] = useState('');
-  const [area, setArea] = useState('');
-  const [descr, setdescr] = useState('');
-  const [channel, setChannel] = useState('');
-  const [pic, setPic] = useState('');
+export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder }) {
+  const [title, setTitle] = useState("");
+  const [contact, setContact] = useState("");
+  const [area, setArea] = useState("");
+  const [descr, setdescr] = useState("");
+  const [channel, setChannel] = useState("");
+  const [pic, setPic] = useState(null);
 
   // const saveForm = () => {
   //   //validacion?aFirebase:mostrarErrores (toast)
   // }
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert("Perdon, necesitamos los permisos de la galeria para continuar.");
+        }
+      }
+    })();
+  }, []);
+
+  const readImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1
+    })
+    console.log(result);
+    if (!result.cancelled) {
+      setPic(result.uri);
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.paragraph}>
@@ -25,17 +47,15 @@ export default function PostForm({ formTitle, titlePlaceHolder, contactPlaceHold
       <TextInput style={styles.input}
         placeholder={titlePlaceHolder}
         value={title}
-        onChangeText={text => setTitle(text)}
-      />
+        onChangeText={text => setTitle(text)} />
       <Text
         style={styles.formItemTitle}>
         Contacto
       </Text>
       <TextInput style={styles.input}
-        placeholder={contactPlaceHolder}
+        placeholder="Nombre del contacto"
         value={contact}
-        onChangeText={text => setContact(text)}
-      />
+        onChangeText={text => setContact(text)} />
       <Text
         style={styles.formItemTitle}>
         Zona
@@ -43,40 +63,40 @@ export default function PostForm({ formTitle, titlePlaceHolder, contactPlaceHold
       <TextInput style={styles.input}
         placeholder={areaPlaceHolder}
         value={area}
-        onChangeText={text => setArea(text)}
-      />
+        onChangeText={text => setArea(text)} />
       <Text
         style={styles.formItemTitle}>
         Descripción
       </Text>
-      <TextInput
-        style={styles.inputMultiline}
+      <TextInput style={styles.inputMultiline}
         multiline={true}
-        placeholder={'Ingresa raza, color, tamaño y cualquier información que ayude a la identificación'}
+        placeholder="Ingresa raza, color, tamaño y cualquier información que ayude a la identificación"
         value={descr}
-        onChangeText={text => setdescr(text)}
-      />
+        onChangeText={text => setdescr(text)} />
       <Text
         style={styles.formItemTitle}>
         Whatsapp
       </Text>
       <TextInput style={styles.input}
-        placeholder={channelPlaceHolder}
+        placeholder="Sin +54 9 y con 11. Ej: 1122334455"
+        keyboardType="phone-pad"
         value={channel}
-        onChangeText={text => setChannel(text)}
-      />
+        onChangeText={text => setChannel(text)} />
       <Text
         style={styles.formItemTitle}>
         Agregar una foto
       </Text>
-      <View style={styles.imageContainer}>
-        <Image source={addPicture} style={styles.singleImage} />
-      </View>
-
+      <TouchableHighlight style={styles.imageContainer} onPress={readImage}>
+        <View>
+          {pic
+            ? <Image source={{ uri: pic }} style={styles.singleImage} />
+            : <Image source={require("../assets/add-picture-icon.png")} style={styles.singleImage} />}
+        </View>
+      </TouchableHighlight>
       <Button title="Publicar" />
     </ScrollView>
   )
-};
+}
 
 const styles = StyleSheet.create({
   container: {
