@@ -7,7 +7,7 @@ export default function DataProvider({ children }) {
 
   useEffect(() => {
     // cada vez que hay cambios en el user se ejecuta
-    console.log(user);
+    // console.log(user);
     if(Object.keys(user).length === 0) {
       // se cerro sesion
       // implementar algo si es necesario
