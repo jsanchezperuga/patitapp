@@ -25,6 +25,7 @@
     "react-native-paper": "^4.10.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",
+    "react-native-toast-message": "^2.0.1",
     "react-native-web": "0.17.1",
     "twrnc": "^2.0.1"
   },
