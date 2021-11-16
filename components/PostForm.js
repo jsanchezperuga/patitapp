@@ -33,9 +33,9 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
         contactName,
         desc,
         wpp: contactNumber,
-        zone: area
+        zone: area,
+        timestamp: Date.now()
       })
-      console.log("ejeje el id es:", id);
     }
   }
 
