@@ -25,7 +25,7 @@ export default function PetsList({ pets, title, setVisible, setPost }) {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#94cfe0";
     const color = item.id === selectedId ? 'white' : 'black';
     return (
       <Item
@@ -70,14 +70,18 @@ const styles = StyleSheet.create({
   itemTitle: {
     fontSize: 17,
     marginLeft:10,
-    marginBottom:3,
+    marginBottom:5,
   },
   title: {
+    marginLeft:15,
     fontSize: 32,
     fontWeight: '700'
   },
   itemImg:{
-    width: 50,
-    height:50
+    width: 75,
+    height:75,
+    borderRadius:5,
+    borderWidth:1,
+    borderColor:'#f7f7f7',
   }
 });
