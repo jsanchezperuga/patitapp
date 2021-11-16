@@ -9,7 +9,7 @@ export default function WhatsappButton({ wpp }) {
   return (
     <TouchableOpacity style={styles.button} onPress={openWhatsapp}>
       <Text style={styles.buttonText}>
-        <Image source={{ uri: "https://img.icons8.com/color/48/000000/whatsapp--v1.png" }} style={styles.whatsappLogo} />
+        <Image source={require("../assets/whatsapp-logo.png")} style={styles.whatsappLogo} />
         Comunicarse al Whatsapp
       </Text>
     </TouchableOpacity>

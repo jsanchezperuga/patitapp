@@ -2,34 +2,32 @@ import React, { useState } from 'react'
 import ReactNativeModal from 'react-native-modal'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
-
 export default function NewPost() {
   const [visible, setVisible] = useState(false);
   const [post, setPost] = useState(null);
   
   return (
-      <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            //acá se invoca el modal
-            //onPress={ }
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Crear aviso de perdido</Text>
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          //acá se invoca el modal
+          //onPress={ }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Crear aviso de perdido</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            activeOpacity={0.8}
-            //acá se invoca el modal
-            //onPress={ }
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
-          </TouchableOpacity>
-
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          //acá se invoca el modal
+          //onPress={ }
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
+        </TouchableOpacity>
       </View>
+    </View>
 
   )
 }
@@ -75,9 +73,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    textAlign:'center',
+    textAlign: 'center',
     fontSize: 30,
-    padding:5
+    padding: 5
   },
   buttonOutlineText: {
     color: '#0782F9',

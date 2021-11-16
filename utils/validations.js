@@ -8,6 +8,7 @@ export function validateEmail(email) {
     error = true;
     message = "El email no tiene un formato valido";
   }
+
   return [error, message];
 }
 
@@ -27,6 +28,6 @@ export function validatePassword(password) {
     error = true;
     message = "La contraseña debe tener por lo menos 3 numeros"
   }
-  
+
   return [error, message]
 }
