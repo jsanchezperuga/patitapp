@@ -9,10 +9,10 @@ function randomInteger(min, max) {
 
 export default function (type) {
   if (type == "lost") {
-    let length = Titles.FOUND_MSG.length;
-    return { formTitle: "Crear aviso de perdido", titlePlaceHolder: Titles.FOUND_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que se perdió" }
-  } else if (type == "lost") {
     let length = Titles.LOST_MSG.length;
-    return { formTitle: "Crear aviso de encontrado", titlePlaceHolder: Titles.LOST_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que fue encontrado" }
+    return { formTitle: "Crear aviso de perdido", titlePlaceHolder: Titles.LOST_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que se perdió" }
+  } else if (type == "found") {
+    let length = Titles.FOUND_MSG.length;
+    return { formTitle: "Crear aviso de encontrado", titlePlaceHolder: Titles.FOUND_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que fue encontrado" }
   }
 }
