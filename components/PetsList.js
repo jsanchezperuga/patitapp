@@ -13,8 +13,8 @@ function Item({ item, onPress, backgroundColor, textColor, setVisible, setPost }
 
   return (
     <TouchableOpacity onPress={openModal} style={[styles.item, backgroundColor]}>
+      <Image source={{ uri: item.image }} style={styles.itemImg} />
       <Text style={[styles.itemTitle, textColor]}>
-        <Image source={{ uri: item.image }} style={{ width: 25, height: 25 }} />
         {item.title.trim().length > 30 ? item.title.trim().slice(0, 30).trim() + "..." : item.title}
       </Text>
     </TouchableOpacity>
@@ -55,18 +55,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    justifyContent:'center',
   },
   item: {
     flex: 1,
-    padding: 20,
-    marginVertical: 8,
+    flexDirection:'row',
+    padding: 5,
+    alignItems:'flex-end',
+    marginVertical: 1,
     marginHorizontal: 16,
+    borderRadius: 5,
+
   },
   itemTitle: {
     fontSize: 17,
+    marginLeft:10,
+    marginBottom:3,
   },
   title: {
     fontSize: 32,
     fontWeight: '700'
+  },
+  itemImg:{
+    width: 50,
+    height:50
   }
 });
