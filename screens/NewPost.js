@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import ReactNativeModal from 'react-native-modal'
 import PostForm from '../components/PostForm'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import generatePlaceHolders from '../utils/generatePlaceholders';
+import exclamation from '../assets/exclamation.png'
 
 export default function NewPost() {
   const [visible, setVisible] = useState(false);
@@ -23,15 +24,23 @@ export default function NewPost() {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => openModal("lost")}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Crear aviso de perdido</Text>
+          style={styles.buttonLost}>
+            <View>
+            <Image source={require("../assets/exclamation.png")} style={styles.foundIcon} />
+            <Text style={styles.buttonText}>Crear aviso de Perdido</Text>
+          </View>
         </TouchableOpacity>
-
+      </View>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => openModal("found")}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
+          style={styles.buttonFound}>
+          <View>
+            <Image source={require("../assets/tick.png")} style={styles.foundIcon} />
+            <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
+          </View>
+
         </TouchableOpacity>
       </View>
     </View>
@@ -44,9 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  inputContainer: {
-    width: '80%'
-  },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
@@ -55,16 +61,26 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    width: '80%',
+    flex: 1,
+    width: '100%',
     justifyContent: 'space-evenly',
     alignContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
 
   },
-  button: {
+  buttonLost: {
+    backgroundColor: '#F08700',
+    width: '80%',
+    height: '80%',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  buttonFound: {
     backgroundColor: '#0782F9',
-    width: '100%',
+    width: '80%',
+    height: '80%',
     padding: 10,
     borderRadius: 5,
     marginTop: 30,
@@ -93,5 +109,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     alignItems: 'center',
+  },
+  foundIcon: {
   }
+
 })
