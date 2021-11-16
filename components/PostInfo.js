@@ -6,7 +6,7 @@ export default function PostInfo({ id, title, image, contactName, desc, zone, wp
  //usar el el id
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title} onPress={() => setVisible(false)}>X</Text>
+      {/* <Text style={styles.title} onPress={() => setVisible(false)}>X</Text> */}
       <Text style={styles.title}>{title}</Text>
       <Image
         source={{ uri: image }}
@@ -23,10 +23,10 @@ export default function PostInfo({ id, title, image, contactName, desc, zone, wp
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    backgroundColor: "#a9a9a9",
-    padding: 16,
-    marginBottom: 24,
+    paddingTop: 20,
+    backgroundColor: '#ecf0f1',
+    // backgroundColor: '#a9a9a9',
+    padding: 8
   },
   row: {
     padding: 4,
