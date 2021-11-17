@@ -57,7 +57,6 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1
     })
-    console.log(result);
     if (!result.cancelled) {
       setPic(result.uri);
     }
