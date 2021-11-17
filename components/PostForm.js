@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableHighlight } from 'react-native';
 import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
 import { createPost } from '../database';
+import { DataContext } from '../contexts/GlobalContext';
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection }) {
+  const { user } = useContext(DataContext);
   const [title, setTitle] = useState("");
-  const [contactName, setContactName] = useState("");
+  const [contactName, setContactName] = useState(user.user.providerData[0].displayName);
   const [area, setArea] = useState("");
   const [desc, setDesc] = useState("");
   const [contactNumber, setContactNumber] = useState("");
