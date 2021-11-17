@@ -21,8 +21,8 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="AppNavigator" component={AppNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
-      <Toast />
       <AlertBox />
+      <Toast />
     </DataProvider>
   )
 }
