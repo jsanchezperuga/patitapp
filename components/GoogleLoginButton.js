@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import * as Google from 'expo-auth-session/providers/google';
+import Toast from 'react-native-toast-message';
 import { Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { DataContext } from '../contexts/GlobalContext';
 import { GoogleAuthProvider, signInWithCredential } from "@firebase/auth"
+import { DataContext } from '../contexts/GlobalContext';
 import { auth } from '../services/Firebase';
 
 
@@ -21,6 +22,7 @@ export default function GoogleLoginButton({ navigation }) {
       signInWithCredential(auth, GoogleAuthProvider.credential(null, authentication.accessToken))
         .then(googledUser => {
           setUser(googledUser);
+          Toast.show({ type: "success", text1: `Bienvenido ${googledUser.user.providerData[0].displayName} 👋👋` })
           navigation.navigate("AppNavigator");
         })
         .catch(err => console.log("error while trying to login with google:", err))
