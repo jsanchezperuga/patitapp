@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableHighlight } from 'react-native';
+import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableOpacity } from 'react-native';
 import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
 import { createPost } from '../database';
 import { DataContext } from '../contexts/GlobalContext';
@@ -14,8 +14,10 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
   const [desc, setDesc] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [pic, setPic] = useState(null);
+  const [isDisable, setIsDisable] = useState(false);
 
   const saveForm = async () => {
+    setIsDisable(true);
     let [cNameError, cNameMessageError] = validatePostContactName(contactName);
     let [cNumberError, cNumberMessageError] = validatePostContactNumber(contactNumber);
     let [titleError, titleMessageError] = validatePostTitle(title);
@@ -41,6 +43,7 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
       setTimeout(() => {
         setVisible(false);
       }, 3000)
+      setIsDisable(false);
     }
   }
 
@@ -66,7 +69,9 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
   }
 
   return (
+    
     <ScrollView style={styles.container}>
+      <Text onPress={() => setVisible(false)}>X</Text>
       <Text style={styles.paragraph}>
         {formTitle}
       </Text>
@@ -115,20 +120,27 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
         style={styles.formItemTitle}>
         Agregar una foto
       </Text>
-      <TouchableHighlight style={styles.imageContainer} onPress={readImage}>
+      <TouchableOpacity style={styles.imageContainer} onPress={readImage}>
         <View>
           {pic
             ? <Image source={{ uri: pic }} style={styles.singleImage} />
             : <Image source={require("../assets/add-picture-icon.png")} style={styles.singleImage} />}
         </View>
-      </TouchableHighlight>
-      <Button title="Publicar" onPress={saveForm} />
+      </TouchableOpacity>
+      <Button title="Publicar" onPress={saveForm} disabled={isDisable} />
       <Toast />
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 30,
+    padding: 5
+  },
   container: {
     flex: 1,
     paddingTop: 20,
