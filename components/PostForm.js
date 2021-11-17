@@ -6,7 +6,7 @@ import { DataContext } from '../contexts/GlobalContext';
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection }) {
+export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection, setVisible }) {
   const { user } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [contactName, setContactName] = useState(user.user.providerData[0].displayName);
@@ -30,14 +30,17 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
 
       Toast.show({ type: "error", text1: "Por favor revise el formulario", text2: messageError, })
     } else {
-      let id = await createPost(collection, {
+      await createPost(collection, user, pic, {
         title,
         contactName,
         desc,
         wpp: contactNumber,
         zone: area,
-        timestamp: Date.now()
-      })
+      });
+      Toast.show({ type: "success", text1: "Se ha creado una publicación con exito" });
+      setTimeout(() => {
+        setVisible(false);
+      }, 3000)
     }
   }
 
