@@ -37,7 +37,7 @@ export default function NewPost() {
           style={styles.buttonFound}>
           <View>
             <Image source={require("../assets/tick.png")} style={styles.foundIcon} />
-            <Text style={styles.buttonText}>Crear aviso de encontrado</Text>
+            <Text style={styles.buttonText}>Crear aviso de Encontrado</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -48,47 +48,33 @@ export default function NewPost() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-  },
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
   },
   buttonContainer: {
     flex: 1,
     width: '100%',
-    justifyContent: 'space-evenly',
-    alignContent: 'space-between',
-    alignItems: 'center',
-
   },
   buttonLost: {
+    flex: 1,
     backgroundColor: '#F08700',
     width: '80%',
     height: '80%',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 30,
-    alignItems: 'center',
+    marginTop: 25,
+    margin: 20,
+    borderRadius: 30,
+    alignSelf:'center',
+    justifyContent:'center',
   },
   buttonFound: {
+    flex: 1,
     backgroundColor: '#0782F9',
     width: '80%',
     height: '80%',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 30,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
+    margin: 20,
+    borderRadius: 30,    
+    alignSelf:'center',    
+    justifyContent:'center',
   },
   buttonText: {
     color: 'white',
@@ -97,17 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     padding: 5
   },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  googleButton: {
-    width: "100%",
-    height: 50,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
   foundIcon: {
+    alignSelf:'center'
   }
 })

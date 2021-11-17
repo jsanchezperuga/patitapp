@@ -8,7 +8,7 @@ export default function Home() {
   const [post, setPost] = useState(null);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 10 }}>
       {/* Implementar mapa/integracion con google maps?? */}
       {/* Por mientras, mostrar una lista con los pedidos de busqueda y encontrados */}
       {post && <ReactNativeModal onBackButtonPress={() => setVisible(false)} children={post} isVisible={visible} />}
