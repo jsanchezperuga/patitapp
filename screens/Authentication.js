@@ -26,7 +26,7 @@ export default function Authentication({ navigation }) {
           Toast.show({ type: "success", text1: `Bienvenido ${loggedUser.user.providerData[0].displayName} 👋👋` })
         })
         .catch(err => {
-          console.log(err.code);
+          console.log("error al querer iniciar:", err.code);
           if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
             Toast.show({ type: "error", text1: "El mail y/o la contraseña no son correctos" })
           }
@@ -47,7 +47,7 @@ export default function Authentication({ navigation }) {
         setUser(registerUser);
         navigation.navigate('AppNavigator');
       } catch (err) {
-        console.log(err.code);
+        console.log("error al querer registrar:", err.code);
         if (err.code === "auth/email-already-in-use") {
           Toast.show({ type: "error", text1: "Ya existe un usuario registrado con este email" })
         }
