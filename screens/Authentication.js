@@ -61,8 +61,7 @@ export default function Authentication({ navigation }) {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform && Platform.OS === "ios" ? "padding" : null}
-    >
+      behavior={Platform && Platform.OS === "ios" ? "padding" : null} >
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email 📩"
@@ -82,15 +81,13 @@ export default function Authentication({ navigation }) {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={traditionalLogin}
-          style={styles.button}
-        >
+          style={styles.button} >
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={registerUser}
-          style={[styles.button, styles.buttonOutline]}
-        >
+          style={[styles.button, styles.buttonOutline]} >
           <Text style={styles.buttonOutlineText}>Registrarse</Text>
         </TouchableOpacity>
         <Text>O tambien puede</Text>
