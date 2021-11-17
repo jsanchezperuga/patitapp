@@ -55,9 +55,9 @@ export function validatePostContactName(contactName) {
   if (contactName.length === 0) {
     error = true;
     message = "El contacto no puede estar vacio";
-  } else if (contactName.length < 6) {
+  } else if (contactName.length < 4) {
     error = true;
-    message = "El contacto es muy corto (min 6 caracteres)";
+    message = "El contacto es muy corto (min 4 caracteres)";
   } else if (contactName.length > 20) {
     error = true;
     message = "El contacto es muy largo (max 20 caracteres)"
