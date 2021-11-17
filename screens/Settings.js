@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { signOut } from '@firebase/auth'
 import { auth } from '../services/Firebase'
 import { DataContext } from '../contexts/GlobalContext'
+import getUserReducedInfo from '../utils/getUserReducedInfo'
 
 export default function Settings({ navigation }) {
-  const { setUser } = useContext(DataContext)
+  const { user, setUser } = useContext(DataContext)
+  const minUser = getUserReducedInfo(user);
+
   const logout = () => {
     setUser({});
     signOut(auth);
@@ -14,6 +17,10 @@ export default function Settings({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Image source={{ uri: minUser.userImage }} style={{width: 50, height: 50, borderRadius: 40}} />
+      <Text>
+        {minUser.userName}
+      </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
