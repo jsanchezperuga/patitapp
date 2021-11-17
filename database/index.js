@@ -20,24 +20,17 @@ export async function createPost(collection, data) {
 export async function comprobateDisplayName({ user }) {
   if ("providerData" in user && user.providerData[0].displayName === null) {
     return new Promise((res) => {
-      res(fire({
-        title: 'Ingrese un usuario',
-        message: 'Porfavor ingrese un nombre de usuario (OJO! este no podra cambiarse)',
-        actions: [
-          {
-            text: 'Continuar',
-            onPress: async ({ name }) => {
-              await updateProfile(auth.currentUser, { displayName: name })
-            }
+      const config = {
+        title: 'Como te llamás? 🤔', message: 'Este es el nombre que se mostrara en tus publicacioes (OJO! este no podra cambiarse)',
+        actions: [{
+          text: 'Continuar',
+          onPress: async ({ name }) => {
+            await updateProfile(auth.currentUser, { displayName: name })
           }
-        ],
-        fields: [
-          {
-            name: 'name',
-            placeholder: 'Ingrese un nombre de usuario',
-          },
-        ],
-      }))
+        }],
+        fields: [{ name: 'name', placeholder: 'Ingrese tu nombre y apellido', }]
+      }
+      res(fire(config));
     })
   }
 }
