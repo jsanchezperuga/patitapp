@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@fir
 import { auth } from '../services/Firebase'
 import { DataContext } from '../contexts/GlobalContext'
 import { validateEmail, validatePassword } from '../utils/validations'
-import { comprobateDisplayName } from '../database'
+import Database from '../database'
 import Toast from 'react-native-toast-message';
 import GoogleLoginButton from '../components/GoogleLoginButton'
 
@@ -43,7 +43,9 @@ export default function Authentication({ navigation }) {
     if (!emailError && !passwordError) {
       try {
         let registerUser = await createUserWithEmailAndPassword(auth, email, password);
-        await comprobateDisplayName(registerUser);
+        if ("providerData" in registerUser.user && registerUser.user.providerData[0].displayName === null) {
+          await Database.changeDisplayName();
+        }
         setUser(registerUser);
         navigation.navigate('AppNavigator');
       } catch (err) {
