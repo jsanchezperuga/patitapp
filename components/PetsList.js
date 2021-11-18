@@ -35,6 +35,7 @@ export default function PetsList({ pets, title, setVisible, setPost }) {
         textColor={{ color }}
         setVisible={setVisible}
         setPost={setPost}
+        key={item.id}
       />
     );
   };

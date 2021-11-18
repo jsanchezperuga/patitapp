@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableOpacity } from 'react-native';
 import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
-import { createPost } from '../database';
+import { AntDesign } from '@expo/vector-icons';
+import Database from '../database';
 import { DataContext } from '../contexts/GlobalContext';
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
@@ -32,7 +33,7 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
 
       Toast.show({ type: "error", text1: "Por favor revise el formulario", text2: messageError, })
     } else {
-      await createPost(collection, user, pic, {
+      await Database.createPost(collection, user, pic, {
         title,
         contactName,
         desc,
@@ -69,12 +70,16 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
   }
 
   return (
-    
+
     <ScrollView style={styles.container}>
-      <Text onPress={() => setVisible(false)}>X</Text>
-      <Text style={styles.paragraph}>
-        {formTitle}
-      </Text>
+      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.paragraph}>
+          {formTitle}
+        </Text>
+        <Text onPress={() => setVisible(false)}>
+          <AntDesign name="down" size={24} color="black" />
+        </Text>
+      </View>
       <Text style={styles.formItemTitle}>
         Título
       </Text>
@@ -107,8 +112,7 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
         placeholder="Ingresa raza, color, tamaño y cualquier información que ayude a la identificación"
         value={desc}
         onChangeText={text => setDesc(text)} />
-      <Text
-        style={styles.formItemTitle}>
+      <Text style={styles.formItemTitle}>
         Whatsapp
       </Text>
       <TextInput style={styles.input}
@@ -148,11 +152,12 @@ const styles = StyleSheet.create({
     padding: 8
   },
   paragraph: {
-    margin: 24,
+    // margin: 24,
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'left',
-  }, formItemTitle: {
+    textAlign: 'left'
+  },
+  formItemTitle: {
     margin: 5,
     fontSize: 14,
     fontWeight: '700'

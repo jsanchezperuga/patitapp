@@ -1,14 +1,17 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet, Image, StatusBar, View } from 'react-native'
+import { ScrollView, Text, StyleSheet, Image, View } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 import WhatsappButton from './WhatsappButton'
 
 export default function PostInfo({ id, title, image, contactName, desc, zone, wpp, setVisible }) {
   //usar el el id
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* <Text style={styles.title} onPress={() => setVisible(false)}>X</Text> */}
-      <View style={styles.imageContainer}>
+      <Text onPress={() => setVisible(false)}>
+        <AntDesign name="down" size={24} color="black" />
+      </Text>
       <Text style={styles.title}>{title}</Text>
+      <View style={styles.imageContainer}>
         <Image source={{ uri: image }} style={styles.image} />
       </View>
       <View style={styles.infoContainer}>
@@ -17,7 +20,7 @@ export default function PostInfo({ id, title, image, contactName, desc, zone, wp
         <Text style={styles.desc}>{desc}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <WhatsappButton wpp={wpp} style={styles.wapButton}/>
+        <WhatsappButton wpp={wpp} style={styles.wapButton} />
       </View>
     </ScrollView>
   )
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#a9a9a9',
     padding: 8,
     borderRadius: 10,
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'space-between',
   },
   row: {
@@ -63,20 +66,20 @@ const styles = StyleSheet.create({
     //backgroundColor: '#FF8C00',
   },
   image: {
-    justifyContent: "center",
-    height: 300, width: 340,
+    // justifyContent: "center",
+    height: 300,
+    width: 300,
     paddingTop: 5,
     borderWidth: 2,
     borderColor: "#ffffff",
-    borderRadius: 10,
+    resizeMode: 'stretch'
   },
-  wapButton : {    
+  wapButton: {
     justifyContent: "center",
   },
   buttonContainer: {
-    flexDirection:'row',
-    //backgroundColor: '#FF0000',
-    justifyContent:'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     padding: 16,
   },
   imageContainer: {
@@ -87,8 +90,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#ffffff",
     backgroundColor: '#d3d3d3',
-    borderRadius:5,
-    justifyContent:'flex-start',
-    width:'100%'
+    borderRadius: 5,
+    justifyContent: 'flex-start',
+    width: '100%'
   }
 });
