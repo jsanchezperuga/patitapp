@@ -12,7 +12,7 @@ export default function NewPost() {
     let placeholders = generatePlaceHolders(type);
     setVisible(true);
     setForm(
-      <PostForm {...placeholders} />
+      <PostForm {...placeholders} setVisible={setVisible} />
     );
   }
 

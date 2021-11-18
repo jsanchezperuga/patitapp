@@ -4,6 +4,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@fir
 import { auth } from '../services/Firebase'
 import { DataContext } from '../contexts/GlobalContext'
 import { validateEmail, validatePassword } from '../utils/validations'
+import { comprobateDisplayName } from '../database'
+import Toast from 'react-native-toast-message';
 import GoogleLoginButton from '../components/GoogleLoginButton'
 
 export default function Authentication({ navigation }) {
@@ -18,81 +20,74 @@ export default function Authentication({ navigation }) {
 
     if (emailValidation && passwordValidation) {
       signInWithEmailAndPassword(auth, email, password)
-        .then(loggedUser => {
-          console.log("iniciando sesion...");
+        .then(async loggedUser => {
           setUser(loggedUser)
           navigation.navigate('AppNavigator')
+          Toast.show({ type: "success", text1: `Bienvenido ${loggedUser.user.providerData[0].displayName} 👋👋` })
         })
         .catch(err => {
-          console.log(err.code);
-          if (err.code === "auth/user-not-found") {
-            console.log("el mail o la contraseña no pertenecen a un usuario registrado");
-          } else if (err.code === "auth/wrong-password") {
-            console.log("el mail y/o la contraseña no son correctos, verifique e intente nuevamente");
+          console.log("error al querer iniciar:", err.code);
+          if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
+            Toast.show({ type: "error", text1: "El mail y/o la contraseña no son correctos" })
           }
         })
     } else {
-      emailValidation ? console.log("El email no tiene un formato valido") : "";
-      passwordValidation ? console.log("La contraseña ingresada es muy corta") : "";
+      !passwordValidation ? Toast.show({ type: "error", text1: "La contraseña ingresada es muy corta" }) : "";
+      !emailValidation ? Toast.show({ type: "error", text1: "El email no tiene un formato valido" }) : "";
     }
   }
 
-  const registerUser = () => {
+  const registerUser = async () => {
     let [emailError, emailMessageError] = validateEmail(email);
     let [passwordError, passwordMessageError] = validatePassword(password);
     if (!emailError && !passwordError) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(registerUser => {
-          console.log("Usuario creado correctamente");
-          setUser(registerUser);
-          navigation.navigate('AppNavigator');
-        })
-        .catch(err => {
-          console.log(err.code);
-          if (err.code === "auth/email-already-in-use") {
-            console.log("Ya existe un usuario registrado con este email");
-          }
-        })
+      try {
+        let registerUser = await createUserWithEmailAndPassword(auth, email, password);
+        await comprobateDisplayName(registerUser);
+        setUser(registerUser);
+        navigation.navigate('AppNavigator');
+      } catch (err) {
+        console.log("error al querer registrar:", err.code);
+        if (err.code === "auth/email-already-in-use") {
+          Toast.show({ type: "error", text1: "Ya existe un usuario registrado con este email" })
+        }
+      }
     } else {
-      emailError ? console.log(emailMessageError) : "";
-      passwordError ? console.log(passwordMessageError) : "";
+      emailError ? Toast.show({ type: "error", text1: emailMessageError }) : "";
+      passwordError ? Toast.show({ type: "error", text1: passwordMessageError }) : "";
     }
   }
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform && Platform.OS === "ios" ? "padding" : null}
-    >
+      behavior={Platform && Platform.OS === "ios" ? "padding" : null} >
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email 📩"
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
-        />
+          keyboardType="email-address" />
         <TextInput
           placeholder="Contraseña 👀"
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
-          secureTextEntry
-        />
+          secureTextEntry />
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={traditionalLogin}
-          style={styles.button}
-        >
+          style={styles.button} >
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={registerUser}
-          style={[styles.button, styles.buttonOutline]}
-        >
+          style={[styles.button, styles.buttonOutline]} >
           <Text style={styles.buttonOutlineText}>Registrarse</Text>
         </TouchableOpacity>
         <Text>O tambien puede</Text>

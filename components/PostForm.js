@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableHighlight } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableOpacity } from 'react-native';
 import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
 import { createPost } from '../database';
+import { DataContext } from '../contexts/GlobalContext';
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection }) {
+export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection, setVisible }) {
+  const { user } = useContext(DataContext);
   const [title, setTitle] = useState("");
-  const [contactName, setContactName] = useState("");
+  const [contactName, setContactName] = useState(user.user.providerData[0].displayName);
   const [area, setArea] = useState("");
   const [desc, setDesc] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [pic, setPic] = useState(null);
+  const [isDisable, setIsDisable] = useState(false);
 
   const saveForm = async () => {
+    setIsDisable(true);
     let [cNameError, cNameMessageError] = validatePostContactName(contactName);
     let [cNumberError, cNumberMessageError] = validatePostContactNumber(contactNumber);
     let [titleError, titleMessageError] = validatePostTitle(title);
@@ -28,14 +32,18 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
 
       Toast.show({ type: "error", text1: "Por favor revise el formulario", text2: messageError, })
     } else {
-      let id = await createPost(collection, {
+      await createPost(collection, user, pic, {
         title,
         contactName,
         desc,
         wpp: contactNumber,
         zone: area,
-        timestamp: Date.now()
-      })
+      });
+      Toast.show({ type: "success", text1: "Se ha creado una publicación con exito" });
+      setTimeout(() => {
+        setVisible(false);
+      }, 3000)
+      setIsDisable(false);
     }
   }
 
@@ -55,14 +63,15 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1
     })
-    console.log(result);
     if (!result.cancelled) {
       setPic(result.uri);
     }
   }
 
   return (
+    
     <ScrollView style={styles.container}>
+      <Text onPress={() => setVisible(false)}>X</Text>
       <Text style={styles.paragraph}>
         {formTitle}
       </Text>
@@ -111,20 +120,27 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
         style={styles.formItemTitle}>
         Agregar una foto
       </Text>
-      <TouchableHighlight style={styles.imageContainer} onPress={readImage}>
+      <TouchableOpacity style={styles.imageContainer} onPress={readImage}>
         <View>
           {pic
             ? <Image source={{ uri: pic }} style={styles.singleImage} />
             : <Image source={require("../assets/add-picture-icon.png")} style={styles.singleImage} />}
         </View>
-      </TouchableHighlight>
-      <Button title="Publicar" onPress={saveForm} />
+      </TouchableOpacity>
+      <Button title="Publicar" onPress={saveForm} disabled={isDisable} />
       <Toast />
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 30,
+    padding: 5
+  },
   container: {
     flex: 1,
     paddingTop: 20,
