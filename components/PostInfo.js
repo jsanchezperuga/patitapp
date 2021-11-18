@@ -1,12 +1,15 @@
 import React from 'react'
 import { ScrollView, Text, StyleSheet, Image, View } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 import WhatsappButton from './WhatsappButton'
 
 export default function PostInfo({ id, title, image, contactName, desc, zone, wpp, setVisible }) {
   //usar el el id
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text onPress={() => setVisible(false)}>X</Text>
+      <Text onPress={() => setVisible(false)}>
+        <AntDesign name="down" size={24} color="black" />
+      </Text>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.imageContainer}>
         <Image source={{ uri: image }} style={styles.image} />
