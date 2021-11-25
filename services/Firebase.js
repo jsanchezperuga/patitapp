@@ -2,20 +2,16 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
 import { getFirestore } from "firebase/firestore";
-import { getStorage, ref } from "firebase/storage"
+import { getStorage, ref } from "firebase/storage";
+
+// Importing enviroment variables JSON
+import env from "../env.json";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAwdMucLbfN13i6hO-ryaWVf0t2W-dbuB4",
-  authDomain: "patitapp-dce25.firebaseapp.com",
-  projectId: "patitapp-dce25",
-  storageBucket: "patitapp-dce25.appspot.com",
-  messagingSenderId: "203158461668",
-  appId: "1:203158461668:web:caf737d5434444ae7f20f1"
-};
+const firebaseConfig = env.firebaseConfig;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

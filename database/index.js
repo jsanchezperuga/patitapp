@@ -7,8 +7,12 @@ import { fire } from "react-native-alertbox";
 export async function getPosts(collection) {
   const q = query(useCollection(db, collection), orderBy("timestamp", "desc"), limit(6))
   let posts = [];
-  let snapshot = await getDocs(q);
-  snapshot.docs.forEach(doc => posts.push({ id: doc.id, ...doc.data() }));
+  try {
+    let snapshot = await getDocs(q);
+    snapshot.docs.forEach(doc => posts.push({ id: doc.id, ...doc.data() }));
+  } catch (err) {
+    console.log(`Error al traer posts (de tipo ${collection}) de firebase`, err);
+  }
 
   return posts;
 }

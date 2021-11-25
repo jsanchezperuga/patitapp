@@ -25,8 +25,8 @@ export default function PetsList({ pets, title, setVisible, setPost }) {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#94cfe0";
-    const color = item.id === selectedId ? 'white' : 'black';
+    const backgroundColor = item.id === selectedId ? "#94cfe0" : "#94cfe0";
+    const color = item.id === selectedId ? 'black' : 'black';
     return (
       <Item
         item={item}

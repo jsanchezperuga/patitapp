@@ -5,16 +5,11 @@ import { Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { GoogleAuthProvider, signInWithCredential } from "@firebase/auth"
 import { DataContext } from '../contexts/GlobalContext';
 import { auth } from '../services/Firebase';
-
+import env from "../env.json";
 
 export default function GoogleLoginButton({ navigation }) {
   const { setUser } = useContext(DataContext)
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: '203158461668-v156na9japv7skbqgrd3mm5j50urpv27.apps.googleusercontent.com',
-    webClientId: '203158461668-v156na9japv7skbqgrd3mm5j50urpv27.apps.googleusercontent.com',
-    // iosClientId: 'configurar_en_caso_de_deploy',
-    // androidClientId: 'configurar_en_caso_de_deploy'
-  });
+  const [request, response, promptAsync] = Google.useAuthRequest(env.googleAuth);
 
   useEffect(() => {
     if (response?.type === 'success') {
