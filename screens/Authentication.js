@@ -1,64 +1,38 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { StyleSheet, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@firebase/auth"
-import { auth } from '../services/Firebase'
+import * as Location from 'expo-location';
+import { traditionalLogin, registerUser, continueAuth } from '../utils/authProcess'
 import { DataContext } from '../contexts/GlobalContext'
-import { validateEmail, validatePassword } from '../utils/validations'
-import Database from '../database'
-import Toast from 'react-native-toast-message';
 import GoogleLoginButton from '../components/GoogleLoginButton'
+import env from "../env.json"
 
 export default function Authentication({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { setUser } = useContext(DataContext)
+  const { setUser, setLocation } = useContext(DataContext)
 
-  const traditionalLogin = () => {
-    // un login tiene menos validaciones que un registro
-    let emailValidation = email.length > 5 && email.includes("@") && email.includes(".");
-    let passwordValidation = password.length > 5
-
-    if (emailValidation && passwordValidation) {
-      signInWithEmailAndPassword(auth, email, password)
-        .then(async loggedUser => {
-          setUser(loggedUser)
-          navigation.navigate('AppNavigator')
-          Toast.show({ type: "success", text1: `Bienvenido ${loggedUser.user.providerData[0].displayName} 👋👋` })
-        })
-        .catch(err => {
-          console.log("error al querer iniciar:", err.code);
-          if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
-            Toast.show({ type: "error", text1: "El mail y/o la contraseña no son correctos" })
-          }
-        })
-    } else {
-      !passwordValidation ? Toast.show({ type: "error", text1: "La contraseña ingresada es muy corta" }) : "";
-      !emailValidation ? Toast.show({ type: "error", text1: "El email no tiene un formato valido" }) : "";
-    }
+  const login = () => {
+    let loggedUser = traditionalLogin(email, password);
+    loggedUser ? continueAuth(setUser, navigation) : null;
   }
 
-  const registerUser = async () => {
-    let [emailError, emailMessageError] = validateEmail(email);
-    let [passwordError, passwordMessageError] = validatePassword(password);
-    if (!emailError && !passwordError) {
-      try {
-        let registerUser = await createUserWithEmailAndPassword(auth, email, password);
-        if ("providerData" in registerUser.user && registerUser.user.providerData[0].displayName === null) {
-          await Database.changeDisplayName();
-        }
-        setUser(registerUser);
-        navigation.navigate('AppNavigator');
-      } catch (err) {
-        console.log("error al querer registrar:", err.code);
-        if (err.code === "auth/email-already-in-use") {
-          Toast.show({ type: "error", text1: "Ya existe un usuario registrado con este email" })
-        }
+  const register = async () => {
+    let registeredUser = registerUser(email, password);
+    registeredUser ? continueAuth(setUser, navigation) : null;
+  }
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setLocation(env.defaultGeolocation);
+        return;
       }
-    } else {
-      emailError ? Toast.show({ type: "error", text1: emailMessageError }) : "";
-      passwordError ? Toast.show({ type: "error", text1: passwordMessageError }) : "";
-    }
-  }
+      let { coords } = await Location.getCurrentPositionAsync({ accuracy: 4 });
+      let { latitude, longitude } = coords;
+      setLocation({ latitude, longitude });
+    })();
+  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -82,13 +56,13 @@ export default function Authentication({ navigation }) {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={traditionalLogin}
+          onPress={login}
           style={styles.button} >
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={registerUser}
+          onPress={register}
           style={[styles.button, styles.buttonOutline]} >
           <Text style={styles.buttonOutlineText}>Registrarse</Text>
         </TouchableOpacity>
