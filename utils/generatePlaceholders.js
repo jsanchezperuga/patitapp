@@ -10,9 +10,9 @@ function randomInteger(min, max) {
 export default function (type) {
   if (type == "lost") {
     let length = Titles.LOST_MSG.length;
-    return { formTitle: "Crear aviso de perdido", titlePlaceHolder: Titles.LOST_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que se perdió", collection: "lostPets" }
+    return { formTitle: "Crear aviso de perdido", titlePlaceHolder: Titles.LOST_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que se perdió", locationInfoText: "Mantenga presionado el marcador rojo dentro del area que se perdió la mascota", collection: "lostPets" }
   } else if (type == "found") {
     let length = Titles.FOUND_MSG.length;
-    return { formTitle: "Crear aviso de encontrado", titlePlaceHolder: Titles.FOUND_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que fue encontrado", collection: "foundPets" }
+    return { formTitle: "Crear aviso de encontrado", titlePlaceHolder: Titles.FOUND_MSG[randomInteger(0, length - 1)], areaPlaceHolder: "Barrio en el que fue encontrado", locationInfoText: "Mantenga presionado el marcador rojo dentro del area donde encontró la mascota", collection: "foundPets" }
   }
 }
