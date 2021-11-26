@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Image, Text, StyleSheet, TextInput, Button, ScrollView, View, TouchableOpacity } from 'react-native';
+import ReactNativeModal from 'react-native-modal';
 import { validatePostContactName, validatePostContactNumber, validatePostTitle, validatePostArea } from '../utils/validations';
 import { AntDesign } from '@expo/vector-icons';
 import Database from '../database';
 import { DataContext } from '../contexts/GlobalContext';
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
+import PositionPicker from './PositionPicker';
 
-export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, collection, setVisible }) {
-  const { user } = useContext(DataContext);
+export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder, locationInfoText, collection, setVisible }) {
+  const { user, location } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [contactName, setContactName] = useState(user.user.providerData[0].displayName);
+  const [isSelectingArea, setIsSelectingArea] = useState(false)
   const [area, setArea] = useState("");
+  const [coords, setCoords] = useState(null)
   const [desc, setDesc] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [pic, setPic] = useState(null);
@@ -32,13 +36,16 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
       titleError ? messageError = `• ${titleMessageError}` : ""
 
       Toast.show({ type: "error", text1: "Por favor revise el formulario", text2: messageError, })
+      setIsDisable(false);
     } else {
       await Database.createPost(collection, user, pic, {
         title,
         contactName,
         desc,
+        coords,
         wpp: contactNumber,
         zone: area,
+        postType: collection
       });
       Toast.show({ type: "success", text1: "Se ha creado una publicación con exito" });
       setTimeout(() => {
@@ -62,7 +69,8 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
   const readImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1
+      quality: 1,
+      allowsEditing: true
     })
     if (!result.cancelled) {
       setPic(result.uri);
@@ -70,8 +78,10 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
   }
 
   return (
-
     <ScrollView style={styles.container}>
+      {isSelectingArea && <ReactNativeModal onBackButtonPress={() => setIsSelectingArea(false)} isVisible={isSelectingArea} style={{ margin: 0 }}>
+        <PositionPicker userLocation={coords ? coords : location} locationInfoText={locationInfoText} setArea={setArea} setCoords={setCoords} setIsSelectingArea={setIsSelectingArea} />
+      </ReactNativeModal>}
       <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.paragraph}>
           {formTitle}
@@ -102,7 +112,7 @@ export default function PostForm({ formTitle, titlePlaceHolder, areaPlaceHolder,
       <TextInput style={styles.input}
         placeholder={areaPlaceHolder}
         value={area}
-        onChangeText={text => setArea(text)} />
+        onPressIn={() => setIsSelectingArea(true)} />
       <Text
         style={styles.formItemTitle}>
         Descripción

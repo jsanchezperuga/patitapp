@@ -4,7 +4,6 @@ import { AntDesign } from '@expo/vector-icons';
 import WhatsappButton from './WhatsappButton'
 
 export default function PostInfo({ id, title, image, contactName, desc, zone, wpp, setVisible }) {
-  //usar el el id
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text onPress={() => setVisible(false)}>
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 20,
     backgroundColor: '#ecf0f1',
-    // backgroundColor: '#a9a9a9',
     padding: 8,
     borderRadius: 10,
     alignItems: 'center',
@@ -52,7 +50,6 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 17,
     justifyContent: "center",
-    //color: '#ffffff',
     color: '#000039',
     padding: 16,
 
@@ -61,12 +58,9 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     padding: 15,
-    //color: '#ffffff',
     color: '#000039',
-    //backgroundColor: '#FF8C00',
   },
   image: {
-    // justifyContent: "center",
     height: 300,
     width: 300,
     paddingTop: 5,
@@ -83,7 +77,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   imageContainer: {
-    //backgroundColor: '#FF0000',
   },
   infoContainer: {
     padding: 15,
