@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import Database from '../database';
 import ReactNativeModal from 'react-native-modal'
-import PetsList from '../components/PetsList'
+import PetsMapList from '../components/PetsMapList';
+import LoadingComponent from '../components/LoadingComponent';
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
@@ -19,17 +20,11 @@ export default function Home() {
   }, [])
 
   return (
-    <View style={{ flex: 1, marginTop: 10 }}>
-      {/* Implementar mapa/integracion con google maps?? */}
+    <View style={styles.container}>
       {post && <ReactNativeModal onBackButtonPress={() => setVisible(false)} children={post} isVisible={visible} style={{ margin: 0 }} />}
       {(lostPets && foundPets)
-        ? <>
-          <PetsList title="Mascotas Perdidas" pets={lostPets} setVisible={setVisible} setPost={setPost} />
-          <PetsList title="Mascotas Encontradas" pets={foundPets} setVisible={setVisible} setPost={setPost} />
-        </>
-        : <View style={{ flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
+        ? <PetsMapList pets={[...lostPets, ...foundPets]} setPost={setPost} setVisible={setVisible} />
+        : <LoadingComponent />
       }
     </View>
   )

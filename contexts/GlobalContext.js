@@ -4,6 +4,7 @@ export const DataContext = createContext();
 
 export default function DataProvider({ children }) {
   const [user, setUser] = useState({})
+  const [location, setLocation] = useState({})
 
   useEffect(() => {
     // cada vez que hay cambios en el user se ejecuta
@@ -15,7 +16,7 @@ export default function DataProvider({ children }) {
   }, [user])
 
   return (
-    <DataContext.Provider value={{ user, setUser }}>
+    <DataContext.Provider value={{ user, location, setUser, setLocation }}>
       {children}
     </DataContext.Provider>
   )
